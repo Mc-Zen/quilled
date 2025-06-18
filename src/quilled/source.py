@@ -11,22 +11,62 @@ def get_name(bit: Bit):
 def gate_to_quill(gate, qc: QuantumCircuit, bundle=False):
     nq = qc.num_qubits
 
+    name = gate.name
     qubits = [qubit._index for qubit in gate.qubits]
     clbits = [clbit._index for clbit in gate.clbits]
     arg_str = ", ".join([str(qubit) for qubit in qubits])
-    if gate.name == "barrier":
+
+    if name == "barrier":
         if qubits == [0, nq - 1]:
             arg_str = ""
         else:
             arg_str = f"start: {qubits[0]}, end: {qubits[1]}"
-    if gate.name == "measure":
+    if name == "measure":
         if bundle:
             creg = gate.clbits[0]._register
             arg_str += f", {qc.cregs.index(creg) + nq}, label: [{clbits[0]}]"
         else:
             arg_str += f", {clbits[0] + nq}"
 
-    return f"{gate.name}({arg_str})"
+    if name == "ecr":
+        name = "mqgate"
+        qubits = sorted(qubits)
+        arg_str = f"{qubits[0]}, n: {qubits[1] - qubits[0] + 1}, [ECR]"
+    if name in ("rx", "ry", "rz"):
+        p = gate.operation.params[0]
+        pifycation = piyfy(p)
+        if pifycation is not None:
+            enum, denom = pifycation
+            if enum == 1: enum = ""
+            else: enum = str(enum)
+
+            if denom == 1: denom = ""
+            p = enum + "π"
+            if denom != "":
+                p = f"({p})/{str(denom)}"
+        arg_str = f"${p}$, " + arg_str
+    return f"{name}({arg_str})"
+
+
+def piyfy(x):
+    pi = 3.14159265358979323
+    frac = x / pi * 8
+    if abs(frac - round(frac)) > 1e-9:
+        return None
+    frac = round(frac)
+    denom = 8
+    if frac % 2 == 0:
+        denom = 4
+        frac //= 2
+    if frac % 2 == 0:
+        denom = 2
+        frac //= 2
+    if frac % 2 == 0:
+        denom = 1
+        frac //= 2
+    
+
+    return (frac, denom)
 
 
 def preamble():
