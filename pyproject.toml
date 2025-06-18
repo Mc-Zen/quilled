@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quilled"
+version = "0.1.0"
+description = "Generate Quill quantum circuit diagrams from Qiskit circuits"
+readme = "README.md"
+requires-python = ">=3.8"
+authors = [{ name = "Mc-Zen" }]
+license = { file = "LICENSE.txt" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Intended Audience :: Science/Research",
+]
+keywords = ["quantum information", "quantum circuits", "typst"]
+dependencies = [
+    "qiskit >= 0.45",
+    "typst >= 0.13.2",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Mc-Zen/quilled"
+"Bug Tracker" = "https://github.com/Mc-Zen/quilled/issues"
