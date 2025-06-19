@@ -113,7 +113,7 @@ def source(
     if qubits is not None:
         qc = extract_subcircuit(qc, qubits=qubits, strict=True)
     else:
-        qubits = range(qc.qubits)
+        qubits = range(qc.num_qubits)
 
     nq = qc.num_qubits
     ncl = len(qc.cregs) if bundle else qc.num_clbits
