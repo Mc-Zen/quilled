@@ -9,11 +9,7 @@
 ---
 
 
-Generate Quill quantum circuit diagrams from Qiskit circuits
-
-## Python package
-
-The python package features???. You can install it via
+This package generates Quill quantum circuit diagrams from Qiskit circuits. You can install it via
 ```
 pip install quilled
 ```
@@ -37,6 +33,10 @@ Or in order to directly draw and display in a Jupyter Notebook.
 from quilled import qprint
 
 qprint(qc)
+qprint(qc, labels=False)  # Do not show qubit labels at the beginning of each wire. 
+qprint(qc, bundle=False)  # Do not combine classical registers into one bundle. 
+qprint(qc, scale=0.8)     # Scales the entire diagram. 
+qprint(qc, qubits=[0, 1]) # Only display subset of qubits
 ```
 
 
