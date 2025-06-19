@@ -1,6 +1,8 @@
+from typing import List, Optional, Tuple
 from qiskit.circuit import Bit, QuantumCircuit, QuantumRegister
 from .extract_subcircuit import extract_subcircuit
 from .piyfy import piyfy
+
 
 def get_name(bit: Bit, map=None):
     name = bit._register.name
@@ -90,9 +92,9 @@ def source(
     qc: QuantumCircuit,
     labels=True,
     bundle=True,
-    scale=1.,
-    qubits=None,
-    highlight=[]
+    scale=1.0,
+    qubits: Optional[List[int]] = None,
+    highlight: List[Tuple[List, str]] = []
 ) -> str:
     """Generate Typst source code to draw a Quill quantum circuit.
 
@@ -104,6 +106,11 @@ def source(
         Whether to display bit labels at the beginning of wires, by default True
     bundle : bool, optional
         Whether to bundle classical wires, by default True
+    scale : float
+        A factor for scaling the entire diagram. 
+    qubits: List[int] or None
+        Display only the circuit on a subset of qubits. Fails with an error, 
+        if there are multi-qubit gates that go out of the subset. 
 
     Returns
     -------
