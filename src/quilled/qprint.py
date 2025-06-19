@@ -4,7 +4,7 @@ import typst
 from qiskit.circuit import QuantumCircuit
 
 
-def qprint(qc: QuantumCircuit, labels=True, bundle=True):
+def qprint(qc: QuantumCircuit, labels=True, bundle=True, **kwargs):
     """Displays a quantum circuit with IPython
 
     Parameters
@@ -18,7 +18,7 @@ def qprint(qc: QuantumCircuit, labels=True, bundle=True):
     """
     from IPython.display import SVG, display
 
-    quill_source = source(qc, labels=labels, bundle=bundle)
+    quill_source = source(qc, labels=labels, bundle=bundle, **kwargs)
     
     svg_bytes = typst.compile(
         quill_source.encode(encoding="utf-8"),
